@@ -67,5 +67,30 @@ namespace AccountOwnerServer.Controllers
             }
         }
 
+        [HttpGet("{id}/account")]
+        public IActionResult GetOwnerWithDetails(Guid id)
+        {
+            try
+            {
+                var owner = _repository.Owner.GetOwnerWithDetails(id);
+
+                if(owner == null)
+                {
+                    _logger.LogError($"Could not find owner with id {id} in the database");
+
+                    return NotFound();
+                }
+
+                _logger.LogInfo($"Returned owner with details for id: {id}");
+
+                var ownerResult = _mapper.Map<OwnerDto>(owner);
+                return Ok(ownerResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside {nameof(GetOwnerWithDetails)} action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

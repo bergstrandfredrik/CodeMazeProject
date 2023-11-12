@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -21,6 +22,13 @@ namespace Repository
         public Owner GetOwnerById(Guid id)
         {
             return FindByCondition(owner => owner.Id.Equals(id))
+                .FirstOrDefault();
+        }
+
+        public Owner GetOwnerWithDetails(Guid id)
+        {
+            return FindByCondition(owner => owner.Id.Equals(id))
+                .Include(ac => ac.Accounts)
                 .FirstOrDefault();
         }
     }

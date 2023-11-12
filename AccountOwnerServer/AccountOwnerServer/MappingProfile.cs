@@ -9,6 +9,7 @@ namespace AccountOwnerServer
         public MappingProfile() 
         {
             CreateMap<Owner, OwnerDto>();
+            CreateMap<Account, AccountDto>();
         }
     }
 }

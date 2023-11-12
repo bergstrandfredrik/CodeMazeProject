@@ -13,5 +13,6 @@ namespace Entities.DataTransferObjects
         public DateTime DateOfBirth { get; set; }
         public string? Address { get; set; }
 
+        public IEnumerable<AccountDto>? Accounts { get; set; }
     }
 }
