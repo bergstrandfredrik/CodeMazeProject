@@ -171,11 +171,17 @@ namespace AccountOwnerServer.Controllers
         {
             try
             {
-                var owner = _repository.Owner.GetOwnerById(id);
+                var owner = _repository.Owner.GetOwnerWithDetails(id);
                 if(owner is null )
                 {
                     _logger.LogError($"Couldn't find owner with id: {id} in database");
                     return NotFound();
+                }
+
+                if(owner.Accounts.Any())
+                {
+                    _logger.LogError($"Owner with id: {id}, have one or more accounts, can't delete that user. Delete accounts first.");
+                    return BadRequest("Owner have active accounts. Can't delete that owner. Delete accounts first.");
                 }
 
                 _repository.Owner.DeleteOwner(owner);
