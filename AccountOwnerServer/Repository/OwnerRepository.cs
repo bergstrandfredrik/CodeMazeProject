@@ -17,5 +17,11 @@ namespace Repository
                 .OrderBy(ow => ow.Name)
                 .ToList();
         }
+
+        public Owner GetOwnerById(Guid id)
+        {
+            return FindByCondition(owner => owner.Id.Equals(id))
+                .FirstOrDefault();
+        }
     }
 }
