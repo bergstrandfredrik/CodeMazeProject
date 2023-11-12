@@ -171,7 +171,17 @@ namespace AccountOwnerServer.Controllers
         {
             try
             {
+                var owner = _repository.Owner.GetOwnerById(id);
+                if(owner is null )
+                {
+                    _logger.LogError($"Couldn't find owner with id: {id} in database");
+                    return NotFound();
+                }
 
+                _repository.Owner.DeleteOwner(owner);
+                _repository.Save();
+
+                return NoContent();
             }
             catch (Exception ex)
             {
