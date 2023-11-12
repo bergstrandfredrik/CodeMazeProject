@@ -10,5 +10,12 @@ namespace Repository
         :base(repositoryContext)
         {
         }
+
+        public IEnumerable<Owner> GetAllOwners()
+        {
+            return FindAll()
+                .OrderBy(ow => ow.Name)
+                .ToList();
+        }
     }
 }
